@@ -1,11 +1,13 @@
 import { createRoot } from "react-dom/client";
-import SearchParams from "./components/SearchParams";
 import {BrowserRouter, Routes, Route} from "react-router-dom"
-import Details from "./Details";
 import { Link } from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import AdaptedPetContext from "./context/AdoptedPetContext";
+
+
+const Details = lazy(()=> import("./Details"));
+const SearchParams = lazy(() => import("./components/SearchParams"));
 
 
 const queryClient = new QueryClient({
@@ -13,7 +15,6 @@ const queryClient = new QueryClient({
     queries:{
       staleTime: Infinity,
       cacheTime: Infinity,
-      
     }
   }
 })
@@ -23,14 +24,18 @@ export const App = () => {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <AdaptedPetContext.Provider value={adaptedPet}>
-        <header>
-          <Link to="/"> Adopt Me! </Link>
-        </header>
+          <Suspense fallback={<div className="loading-pane">
+            <h2 className="loader">&</h2>
+          </div>}>
+            <header>
+              <Link to="/"> Adopt Me! </Link>
+            </header>
 
-        <Routes>
-          <Route path="/details/:id" element={<Details />} />
-          <Route path="/" element={<SearchParams />} />
-        </Routes>
+            <Routes>
+              <Route path="/details/:id" element={<Details />} />
+              <Route path="/" element={<SearchParams />} />
+            </Routes>
+          </Suspense>
         </AdaptedPetContext.Provider>
       </QueryClientProvider>
     </BrowserRouter>
