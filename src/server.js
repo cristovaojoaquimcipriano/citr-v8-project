@@ -8,6 +8,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const PORT = process.env.PORT || 3001;
 
+
+
 const html = fs
   .readFileSync(path.resolve(__dirname, "../dist/client/index.html"))
   .toString();
