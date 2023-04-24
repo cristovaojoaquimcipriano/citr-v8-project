@@ -10,22 +10,23 @@ import fetchSearch from "../api/fetchSearch";
 import AdoptedPetContext from "../context/AdoptedPetContext";
 import useBreedList from "../hooks/useBreedList";
 import Results from "./Results";
+import { Animal } from "../api/ResponsesTypes";
 
-const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
+const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
 const SearchParams = () => {
   const [requestParams, setRequestParams] = useState({
     location: "",
-    animal: "",
+    animal: "" as Animal,
     breed: "",
   });
-  const [animal, setAnimal] = useState("");
+  const [animal, setAnimal] = useState("" as Animal);
   const [breeds] = useBreedList(animal);
   const [adoptedPet] = useContext(AdoptedPetContext);
 
   const [isPending, startTransition] = useTransition();
 
-  const results = useQuery(["pets", requestParams], fetchSearch);
-  const pets = results.data?.pets || [];
+  const results = useQuery(["search", requestParams], fetchSearch);
+  const pets = results?.data?.pets ?? [];
 
   const deferredPets = useDeferredValue(pets);
   const renderedPets = useMemo(
@@ -38,11 +39,11 @@ const SearchParams = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          const formDta = new FormData(e.target);
+          const formDta = new FormData(e.currentTarget);
           const obj = {
-            animal: formDta.get("animal") ?? "",
-            breed: formDta.get("breed") ?? "",
-            location: formDta.get("location") ?? "",
+            animal: formDta.get("animal")?.toString() as Animal ?? "" as Animal,
+            breed: formDta.get("breed")?.toString() ?? "",
+            location: formDta.get("location")?.toString() ?? "",
           };
 
           startTransition(() => {
@@ -65,7 +66,7 @@ const SearchParams = () => {
             id="animal"
             name="animal"
             value={animal}
-            onChange={(e) => setAnimal(e.target.value)}
+            onChange={(e) => setAnimal(e.target.value as Animal)}
           >
             (
             <option />

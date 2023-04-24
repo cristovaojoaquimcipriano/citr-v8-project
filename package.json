@@ -31,7 +31,8 @@
     "lint": "eslint \"src**/*.{js,jsx,ts,tsx}\" --quiet",
     "format": "prettier --write \"src**/*.{js,jsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --experimental-fetch src/server.js"
+    "start": "node --experimental-fetch src/server.js",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
