@@ -30,7 +30,9 @@ app.use((req, res) => {
     onShellReady() {
       stream.pipe(res);
     },
-    onShellError() {},
+    onShellError() {
+      // TODO: handle error
+    },
 
     onAllReady() {
       res.write(parts[1]);

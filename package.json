@@ -2,9 +2,12 @@
   "devDependencies": {
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.40.1",
+    "@typescript-eslint/parser": "^5.40.1",
     "@vitejs/plugin-react": "^2.1.0",
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.8",
@@ -25,7 +28,7 @@
     "build:server": "vite build --outDir ../dist/server --ssr ServerApp.jsx",
     "build": "npm run build:client && npm run build:server",
     "preview": "vite preview",
-    "lint": "eslint \"src**/*.{js,jsx}\" --quiet",
+    "lint": "eslint \"src**/*.{js,jsx,ts,tsx}\" --quiet",
     "format": "prettier --write \"src**/*.{js,jsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --experimental-fetch src/server.js"

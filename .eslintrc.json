@@ -4,19 +4,25 @@
         "plugin:import/errors",
         "plugin:react/recommended",
         "plugin:jsx-a11y/recommended",
+         "plugin:@typescript-eslint/recommended",
         "plugin:react-hooks/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "prettier"
     ],
     "rules": {
         "react/prop-types":0,
-        "react/react-in-jsx-scope":0
+        "react/react-in-jsx-scope":0,
+        "@typescript/no-empty-function":0
     },
     "plugins": [
         "react",
         "jsx-a11y",
-        "import"
+        "import",
+        "@typescript-eslint"
     ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
+        "project": "./tsconfig.json",
         "ecmaVersion": 2022,
         "sourceType": "module",
         "ecmaFeatures": {
@@ -32,9 +38,12 @@
         "react": {
             "version": "detect"
         }, 
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
         "import/resolver": {
-            "node": {
-                "extensions": [".js", ".jsx"]
+            "typescript":{
+                "alwaysTryTypes": true
             }
         }
     }
