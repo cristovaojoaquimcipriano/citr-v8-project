@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import AdaptedPetContext from "./context/AdoptedPetContext";
+import {Provider} from "react-redux"
+import store from "./store"
 
 const Details = lazy(() => import("./Details"));
 const SearchParams = lazy(() => import("./components/SearchParams"));
@@ -16,10 +17,10 @@ const queryClient = new QueryClient({
   },
 });
 export const App = () => {
-  const adaptedPet = useState(null);
+  
   return (
     <QueryClientProvider client={queryClient}>
-      <AdaptedPetContext.Provider value={adaptedPet}>
+      <Provider store={store}>
         <Suspense
           fallback={
             <div className="loading-pane">
@@ -36,7 +37,7 @@ export const App = () => {
             <Route path="/" element={<SearchParams />} />
           </Routes>
         </Suspense>
-      </AdaptedPetContext.Provider>
+      </Provider>
     </QueryClientProvider>
   );
 };
