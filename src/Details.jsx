@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { lazy, useContext, useState } from "react";
+import { lazy, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { adopt } from "./adoptedPetSlice";
 import fetchPet from "./api/fetchPet";
 import Carouserl from "./components/Carousel";
-import AdoptedPetContext from "./context/AdoptedPetContext";
 import ErrorBoundary from "./erros/ErrorBoundary";
 
 const Modal = lazy(() => import("./components/modals/Modal"));
@@ -13,9 +14,7 @@ const Details = () => {
   const results = useQuery(["details", id], fetchPet);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
-  // eslint-disable-next-line no-unused-vars
-  const [_, setAdoptedPet] = useContext(AdoptedPetContext);
+  const dispatch = useDispatch();
 
   if (results.isLoading) {
     return (
@@ -43,7 +42,7 @@ const Details = () => {
                 <div className="buttons">
                   <button
                     onClick={() => {
-                      setAdoptedPet(pet);
+                      dispatch(adopt(pet));
                       navigate("/");
                     }}
                   >
